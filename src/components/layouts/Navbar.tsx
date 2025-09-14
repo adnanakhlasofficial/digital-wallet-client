@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { ModeToggle } from "../navbar-components/ModeToggle";
 
 // Navigation links array to be used in both desktop and mobile menus
@@ -24,6 +24,7 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
+  const navigate = useNavigate();
   return (
     <header className="px-4 md:px-6 container mx-auto">
       <div className="flex h-16 justify-between gap-4">
@@ -110,8 +111,8 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          <Button asChild className="w-26">
-            <Link to="#">Sign In</Link>
+          <Button onClick={() => navigate("/login")} className="w-26">
+            Login
           </Button>
         </div>
       </div>
