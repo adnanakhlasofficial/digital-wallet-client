@@ -13,8 +13,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { ChevronsRight } from "lucide-react";
-import { useNavigate } from "react-router";
-import Logo from "../navbar-components/logo";
+import { Link, useNavigate } from "react-router";
+import Logo from "./logo";
 
 // This is sample data.
 const data = {
@@ -47,7 +47,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           size="lg"
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
         >
-          <div className="bg-sidebar-primary flex aspect-square size-10 items-center justify-center rounded-lg ">
+          <div className="text-primary flex aspect-square size-10 items-center justify-center rounded-lg ">
             <Logo />
           </div>
           <div>
@@ -68,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>{item.title}</a>
+                      <Link to={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}

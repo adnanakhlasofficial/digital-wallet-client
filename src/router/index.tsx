@@ -6,6 +6,7 @@ import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import UpdateUser from "@/pages/UpdateUser";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
@@ -39,6 +40,12 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         Component: DashboardLayout,
+        children: [
+          {
+            path: "update/user",
+            Component: UpdateUser,
+          },
+        ],
       },
     ],
   },

@@ -12,48 +12,62 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "../ui/button";
-import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import type { IUpdateUser } from "@/types";
+import { useUpdateUserMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
+import useUser from "@/hooks/useUser";
 
 export const phoneRegex = /^01[3-9]\d{8}$/;
 
-const formSchema = z.object({
-  name: z.string().trim().nonempty({ message: "Name is required" }),
-  phone: z
-    .string()
-    .trim()
-    .nonempty({ message: "Phone number is required" })
-    .length(11, { message: "Number length must be 11 digits" })
-    .regex(/^\d+$/, { message: "Only numeric characters are allowed" })
-    .regex(phoneRegex, {
-      message: "Invalid Bangladeshi phone number. Format: 01XXXXXXXXX",
-    }),
-  password: z.string().trim().nonempty({ message: "Password is required" }),
-});
+const formSchema = z
+  .object({
+    name: z.string().trim().nonempty({ message: "Name is required" }),
+    password: z.string().trim().nonempty({ message: "Password is required" }),
+    newPassword: z.string().optional(),
+    confirmPassword: z.string().optional(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Password does not match",
+  });
 
-export default function RegisterForm() {
-  const [register] = useRegisterMutation();
+export default function UpdateUserForm() {
+  const [updateUser] = useUpdateUserMutation();
+  const { _id } = useUser();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
       name: "",
-      phone: "",
       password: "",
+      newPassword: "",
+      confirmPassword: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const toastId = toast.loading("Registering...");
+    const toastId = toast.loading("Updating info...");
+    const updateUserInfo: IUpdateUser = {
+      _id,
+      name: values.name,
+      password: values.password,
+    };
+
+    if (values.newPassword && values.newPassword === values.confirmPassword) {
+      updateUserInfo.newPassword = values.confirmPassword;
+    }
+
     try {
-      const res = await register(values).unwrap();
-      toast.success("Register success", { id: toastId });
+      const res = await updateUser(updateUserInfo).unwrap();
       console.log(res);
+      toast.success("Updated info successfully", { id: toastId });
     } catch (error) {
-      toast.error("Something went wrong.");
+      toast.error("Something went wrong.", { id: toastId });
       console.error(error);
     }
+
+    console.log(updateUserInfo);
   }
 
   return (
@@ -78,21 +92,7 @@ export default function RegisterForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  Phone <span className="text-destructive">*</span>
-                </FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="01398765432" type="text" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
           <FormField
             control={form.control}
             name="password"
@@ -100,6 +100,37 @@ export default function RegisterForm() {
               <FormItem>
                 <FormLabel>
                   Password <span className="text-destructive">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Password {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="newPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  New Password <span className="text-destructive">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Password {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Confirm New Password
+                  <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
                   <Password {...field} />

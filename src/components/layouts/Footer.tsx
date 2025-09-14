@@ -1,5 +1,5 @@
 import { Facebook, Instagram, Linkedin, Twitch, Twitter } from "lucide-react";
-import Logo from "../navbar-components/logo";
+import Logo from "../ui/logo";
 import { Link } from "react-router";
 
 const defaultSections = [

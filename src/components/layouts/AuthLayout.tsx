@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router";
 import { Button } from "../ui/button";
 import { HomeIcon } from "lucide-react";
-import { ModeToggle } from "../navbar-components/ModeToggle";
+import { ModeToggle } from "../ui/ModeToggle";
 
 export default function AuthLayout() {
   const navigate = useNavigate();
