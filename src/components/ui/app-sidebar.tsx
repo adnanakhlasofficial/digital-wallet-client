@@ -16,12 +16,14 @@ import { routesByRole } from "@/utils/routes-by-role";
 import { ChevronsRight } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router";
 import Logo from "./logo";
+import { useUserMeQuery } from "@/redux/features/auth/auth.api";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { data } = useUserMeQuery(undefined);
 
-  const sidebar = routesByRole("USER");
+  const sidebar = routesByRole(data?.data?.role);
 
   return (
     <Sidebar {...props}>

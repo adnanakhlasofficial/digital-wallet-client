@@ -80,7 +80,12 @@ export default function LoginForm() {
                   Phone <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="01398765432" type="text" />
+                  <Input
+                    className="h-12"
+                    {...field}
+                    placeholder="01398765432"
+                    type="text"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,11 +106,12 @@ export default function LoginForm() {
               </FormItem>
             )}
           />
-          <Button className="mt-4">Login</Button>
+          <Button className="mt-4 h-12">Login</Button>
           <Separator />
           <Button
             onClick={() => setUserCredential()}
             type="submit"
+            className="h-12"
             variant={"outline"}
           >
             Login as Admin

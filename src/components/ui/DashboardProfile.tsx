@@ -27,9 +27,25 @@ export default function DashboardProfile() {
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
 
-  const user = data?.data;
+  const user = data?.data || {
+    _id: "68bc815c01a83f24b0f59d79",
+    name: "Roth Hancock",
+    phone: "01812345678",
+    role: "ADMIN",
+    status: "ACTIVE",
+    createdAt: "2025-09-06T18:45:48.552Z",
+    updatedAt: "2025-09-14T21:51:36.169Z",
+    wallet: {
+      _id: "68bc815c01a83f24b0f59d7a",
+      user: "68bc815c01a83f24b0f59d79",
+      balance: 55,
+      status: "ACTIVE",
+      createdAt: "2025-09-06T18:45:48.555Z",
+      updatedAt: "2025-09-07T18:45:04.435Z",
+    },
+  };
 
-  const userNameAvatar = getUserInitials(user.name);
+  const userNameAvatar = getUserInitials(user?.name);
 
   async function handleLogout() {
     try {
@@ -51,7 +67,7 @@ export default function DashboardProfile() {
         >
           <Avatar>
             <AvatarImage src="./avatar.jpg" alt="Profile image" />
-            <AvatarFallback className="font-medium tracking-widest">
+            <AvatarFallback className="font-medium tracking-widest bg-popover-foreground text-popover">
               {userNameAvatar || "U"}
             </AvatarFallback>
           </Avatar>

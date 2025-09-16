@@ -1,6 +1,7 @@
+import { BookOpen, Contact, Home } from "lucide-react";
+
 export const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Features" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
+  { href: "/", icon: Home, label: "Home", active: true },
+  { href: "/about", icon: BookOpen, label: "About" },
+  { href: "/contact", icon: Contact, label: "Contact" },
 ];

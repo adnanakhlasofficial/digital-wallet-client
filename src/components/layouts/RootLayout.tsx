@@ -5,13 +5,13 @@ import Navbar from "./Navbar";
 export default function RootLayout() {
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b sticky top-0 z-50 bg-popover">
+      <header className="border-b sticky top-0 z-50 bg-sidebar">
         <Navbar />
       </header>
       <main className="grow">
         <Outlet />
       </main>
-      <footer className="border-t pt-8 bg-popover mt-20">
+      <footer className="border-t pt-8 bg-sidebar mt-20">
         <Footer />
       </footer>
     </div>

@@ -15,7 +15,7 @@ export default function Password({ ...field }) {
       <div className="relative">
         <Input
           {...field}
-          className="pe-9"
+          className="pe-9 h-12"
           placeholder="Password"
           type={isVisible ? "text" : "password"}
         />

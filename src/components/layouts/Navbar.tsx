@@ -15,12 +15,14 @@ import { navigationLinks } from "@/constants/navbar-links";
 import { cn } from "@/lib/utils";
 import { useUserMeQuery } from "@/redux/features/auth/auth.api";
 import { LoaderCircle } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { ModeToggle } from "../ui/ModeToggle";
 import UserProfile from "../ui/UserProfile";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  console.log(pathname);
   const { data, isLoading } = useUserMeQuery(undefined);
 
   const user = data?.data;
@@ -91,18 +93,24 @@ export default function Navbar() {
             {/* Navigation menu */}
             <NavigationMenu className="h-full *:h-full max-md:hidden">
               <NavigationMenuList className="h-full gap-2">
-                {navigationLinks.map((link, index) => (
+                {navigationLinks.map(({ href, icon: Icon, label }, index) => (
                   <NavigationMenuItem key={index} className="h-full">
                     <NavigationMenuLink
                       asChild
                       className={cn(
-                        "text-muted-foreground hover:text-primary border-b-primary hover:border-b-primary data-[active]:border-b-primary h-full justify-center rounded-none border-y-2 border-transparent py-1.5 font-medium hover:bg-transparent data-[active]:bg-transparent!",
+                        "text-muted-foreground hover:text-primary border-b-primary hover:border-b-primary h-full justify-center rounded-none border-y-2 border-transparent py-1.5 font-medium hover:bg-transparent group",
                         {
-                          "text-primary font-semibold": link.active,
+                          "text-primary font-semibold": href === pathname,
                         }
                       )}
                     >
-                      <Link to={link.href}>{link.label}</Link>
+                      <Link
+                        className="flex items-center gap-2 flex-row"
+                        to={href}
+                      >
+                        <Icon className="group-hover:hover:text-primary" />
+                        {label}
+                      </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}

@@ -2,6 +2,13 @@ import App from "@/App";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import RootLayout from "@/components/layouts/RootLayout";
+import {
+  adminSidebar,
+  commonSidebar,
+  userSidebar,
+} from "@/constants/sidebar-links";
+import About from "@/pages/About";
+import Contact from "@/pages/Contact";
 import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
@@ -24,6 +31,14 @@ const router = createBrowserRouter([
             index: true,
             Component: Home,
           },
+          {
+            path: "/contact",
+            Component: Contact,
+          },
+          {
+            path: "/about",
+            Component: About,
+          },
         ],
       },
       {
@@ -42,7 +57,13 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         Component: DashboardLayout,
-        children: [...generateRoutes(routesByRole("USER") as ISidebarItem[])],
+        children: [
+          ...generateRoutes([
+            ...commonSidebar,
+            ...adminSidebar,
+            ...userSidebar,
+          ]),
+        ],
       },
     ],
   },

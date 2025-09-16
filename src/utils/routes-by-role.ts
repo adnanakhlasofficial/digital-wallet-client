@@ -11,6 +11,6 @@ export function routesByRole(role: TRole) {
     case userRole.user:
       return userSidebar;
     default:
-      return []
+      return [];
   }
 }

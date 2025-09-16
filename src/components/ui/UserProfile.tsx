@@ -59,7 +59,7 @@ export default function UserProfile() {
         >
           <Avatar>
             <AvatarImage src="./avatar.jpg" alt="Profile image" />
-            <AvatarFallback className="font-medium tracking-widest">
+            <AvatarFallback className="font-medium tracking-widest bg-popover-foreground text-popover">
               {userNameAvatar || "U"}
             </AvatarFallback>
           </Avatar>

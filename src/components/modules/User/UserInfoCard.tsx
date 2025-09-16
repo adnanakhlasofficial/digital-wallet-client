@@ -5,9 +5,11 @@ import { Separator } from "@/components/ui/separator";
 import { useUserMeQuery } from "@/redux/features/auth/auth.api";
 import { formatCurrency } from "@/utils/format-currency";
 import { getUserInitials } from "@/utils/get-user-initials";
-import { getUserRoleVariant } from "@/utils/get-user-role-variant";
-import { getUserStatusVariant } from "@/utils/get-user-status-variant";
-import { getWalletStatusVariant } from "@/utils/get-wallet-status-variant";
+import {
+  getUserRoleVariant,
+  getUserStatusVariant,
+  getWalletStatusVariant,
+} from "@/utils/status-functions";
 import { format } from "date-fns";
 import {
   Calendar,
@@ -32,7 +34,7 @@ export default function UserInfoCard() {
       <CardHeader className="">
         <div className="flex items-center space-x-4">
           <Avatar className="h-16 w-16">
-            <AvatarFallback className="text-xl font-bold backdrop-blur-sm">
+            <AvatarFallback className="text-xl font-bold backdrop-blur-sm bg-popover-foreground text-popover">
               {getUserInitials(userData?.name)}
             </AvatarFallback>
           </Avatar>

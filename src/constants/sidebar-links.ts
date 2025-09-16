@@ -1,3 +1,6 @@
+import AllTransactions from "@/pages/AllTransactions";
+import AllUsers from "@/pages/AllUsers";
+import AllWallets from "@/pages/AllWallets";
 import EditProfile from "@/pages/EditProfile";
 import MyProfile from "@/pages/MyProfile";
 import TransferFund from "@/pages/TransferFund";
@@ -6,7 +9,7 @@ import type { ISidebarItem } from "@/types";
 import { CreditCard, Send, UserCog } from "lucide-react";
 import { RiUser3Line } from "react-icons/ri";
 
-export const userSidebar: ISidebarItem[] = [
+export const commonSidebar: ISidebarItem[] = [
   {
     title: "Profile & Personal Info",
     items: [
@@ -25,6 +28,21 @@ export const userSidebar: ISidebarItem[] = [
       },
     ],
   },
+  {
+    title: "Users",
+    items: [
+      {
+        title: "All Users",
+        icon: CreditCard,
+        url: "/dashboard/all-users",
+        component: AllUsers,
+      },
+    ],
+  },
+];
+
+export const userSidebar: ISidebarItem[] = [
+  ...commonSidebar,
   {
     title: "Wallet & Transactions",
     items: [
@@ -45,24 +63,7 @@ export const userSidebar: ISidebarItem[] = [
 ];
 
 export const adminSidebar: ISidebarItem[] = [
-  {
-    title: "Profile & Personal Info",
-    items: [
-      {
-        index: true,
-        title: "My Profile",
-        icon: RiUser3Line,
-        url: "/dashboard/my-profile",
-        component: MyProfile,
-      },
-      {
-        title: "Edit Profile Page",
-        icon: UserCog,
-        url: "/dashboard/edit-profile",
-        component: EditProfile,
-      },
-    ],
-  },
+  ...commonSidebar,
   {
     title: "Wallet & Transactions",
     items: [
@@ -70,19 +71,13 @@ export const adminSidebar: ISidebarItem[] = [
         title: "All Transactions",
         icon: Send,
         url: "/dashboard/all-transactions",
-        component: TransferFund,
+        component: AllTransactions,
       },
       {
         title: "All Wallets",
         icon: CreditCard,
         url: "/dashboard/all-wallets",
-        component: WithdrawMoney,
-      },
-      {
-        title: "All Users",
-        icon: CreditCard,
-        url: "/dashboard/all-users",
-        component: WithdrawMoney,
+        component: AllWallets,
       },
     ],
   },

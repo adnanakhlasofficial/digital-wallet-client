@@ -8,16 +8,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Password from "@/components/ui/Password";
-import {
-  useUpdateUserMutation,
-  useUserMeQuery,
-} from "@/redux/features/auth/auth.api";
+import { useUserMeQuery } from "@/redux/features/auth/auth.api";
 import type { IUpdateUser } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import { Button } from "../ui/button";
+import { useUpdateUserMutation } from "@/redux/features/user/user.api";
 
 export const phoneRegex = /^01[3-9]\d{8}$/;
 
@@ -90,7 +88,12 @@ export default function UpdateUserForm() {
                   Name <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="John Doe" type="text" />
+                  <Input
+                    className="h-12"
+                    {...field}
+                    placeholder="John Doe"
+                    type="text"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -138,7 +141,7 @@ export default function UpdateUserForm() {
               </FormItem>
             )}
           />
-          <Button className="mt-4">Create Account</Button>
+          <Button className="mt-4 h-12">Update</Button>
         </form>
       </Form>
     </>

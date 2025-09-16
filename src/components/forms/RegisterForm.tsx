@@ -72,7 +72,12 @@ export default function RegisterForm() {
                   Name <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="John Doe" type="text" />
+                  <Input
+                    className="h-12"
+                    {...field}
+                    placeholder="John Doe"
+                    type="text"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -87,7 +92,12 @@ export default function RegisterForm() {
                   Phone <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="01398765432" type="text" />
+                  <Input
+                    className="h-12"
+                    {...field}
+                    placeholder="01398765432"
+                    type="text"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,7 +118,7 @@ export default function RegisterForm() {
               </FormItem>
             )}
           />
-          <Button className="mt-4">Create Account</Button>
+          <Button className="mt-4 h-12">Create Account</Button>
         </form>
       </Form>
     </>
