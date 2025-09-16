@@ -8,14 +8,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Password from "@/components/ui/Password";
+import {
+  useUpdateUserMutation,
+  useUserMeQuery,
+} from "@/redux/features/auth/auth.api";
+import type { IUpdateUser } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 import { Button } from "../ui/button";
-import type { IUpdateUser } from "@/types";
-import { useUpdateUserMutation } from "@/redux/features/auth/auth.api";
-import { toast } from "sonner";
-import useUser from "@/hooks/useUser";
 
 export const phoneRegex = /^01[3-9]\d{8}$/;
 
@@ -33,13 +35,15 @@ const formSchema = z
 
 export default function UpdateUserForm() {
   const [updateUser] = useUpdateUserMutation();
-  const { _id } = useUser();
+  const { data } = useUserMeQuery(undefined);
+
+  const { _id, name } = data?.data || {};
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      name: "",
+      name: name,
       password: "",
       newPassword: "",
       confirmPassword: "",
@@ -113,9 +117,7 @@ export default function UpdateUserForm() {
             name="newPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  New Password <span className="text-destructive">*</span>
-                </FormLabel>
+                <FormLabel>New Password</FormLabel>
                 <FormControl>
                   <Password {...field} />
                 </FormControl>
@@ -128,10 +130,7 @@ export default function UpdateUserForm() {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  Confirm New Password
-                  <span className="text-destructive">*</span>
-                </FormLabel>
+                <FormLabel>Confirm New Password</FormLabel>
                 <FormControl>
                   <Password {...field} />
                 </FormControl>

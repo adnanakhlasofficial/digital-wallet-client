@@ -15,7 +15,7 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 export const phoneRegex = /^01[3-9]\d{8}$/;
 
@@ -33,6 +33,7 @@ const formSchema = z.object({
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const [login] = useLoginMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -56,7 +57,7 @@ export default function LoginForm() {
       const res = await login(values).unwrap();
       toast.success("Login success", { id: toastId });
       console.log(res);
-      navigate("/");
+      navigate(state || "/");
     } catch (error) {
       toast.error("Failed to login");
       console.error(error);

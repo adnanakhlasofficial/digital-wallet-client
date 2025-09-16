@@ -6,7 +6,9 @@ import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
-import UpdateUser from "@/pages/UpdateUser";
+import type { ISidebarItem } from "@/types";
+import { generateRoutes } from "@/utils/generate-routes";
+import { routesByRole } from "@/utils/routes-by-role";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
@@ -40,12 +42,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         Component: DashboardLayout,
-        children: [
-          {
-            path: "update/user",
-            Component: UpdateUser,
-          },
-        ],
+        children: [...generateRoutes(routesByRole("USER") as ISidebarItem[])],
       },
     ],
   },

@@ -11,24 +11,21 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import useUser from "@/hooks/useUser";
+import { navigationLinks } from "@/constants/navbar-links";
 import { cn } from "@/lib/utils";
+import { useUserMeQuery } from "@/redux/features/auth/auth.api";
 import { LoaderCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { ModeToggle } from "../ui/ModeToggle";
 import UserProfile from "../ui/UserProfile";
 
-// Navigation links array to be used in both desktop and mobile menus
-const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Features" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
-];
-
 export default function Navbar() {
   const navigate = useNavigate();
-  const user = useUser();
+  const { data, isLoading } = useUserMeQuery(undefined);
+
+  const user = data?.data;
+
+  console.log(user);
 
   return (
     <header className="px-4 md:px-6 container mx-auto">
@@ -116,17 +113,17 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          {user?.loading && (
+          {isLoading && (
             <span className="animate-spin">
               <LoaderCircle />
             </span>
           )}
-          {!user?.phone && !user?.loading && (
+          {!user?.phone && !isLoading && (
             <Button onClick={() => navigate("/login")} className="w-26">
               Login
             </Button>
           )}
-          {user?.phone && !user?.loading && (
+          {user?.phone && !isLoading && (
             <>
               <UserProfile />
             </>

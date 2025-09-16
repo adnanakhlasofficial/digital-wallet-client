@@ -1,12 +1,4 @@
-import {
-  BookOpenIcon,
-  ChevronDownIcon,
-  Layers2Icon,
-  LayoutDashboard,
-  LogOutIcon,
-  UserPen,
-  UserPenIcon,
-} from "lucide-react";
+import { ChevronDownIcon, Home, LogOutIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -24,12 +16,12 @@ import {
   useLogoutMutation,
   useUserMeQuery,
 } from "@/redux/features/auth/auth.api";
+import { useNavigate } from "react-router";
 import { useAppDispatch } from "@/redux/hooks";
 import { getUserInitials } from "@/utils/get-user-initials";
-import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
-export default function UserProfile() {
+export default function DashboardProfile() {
   const { data } = useUserMeQuery(undefined);
   const navigate = useNavigate();
   const [logout] = useLogoutMutation();
@@ -37,7 +29,7 @@ export default function UserProfile() {
 
   const user = data?.data;
 
-  const userNameAvatar = getUserInitials(user?.name);
+  const userNameAvatar = getUserInitials(user.name);
 
   async function handleLogout() {
     try {
@@ -81,39 +73,15 @@ export default function UserProfile() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => navigate("/dashboard/my-profile")}>
-            <LayoutDashboard
-              size={16}
-              className="opacity-60"
-              aria-hidden="true"
-            />
-            <span>Dashboard</span>
+          <DropdownMenuItem onClick={() => navigate("/")}>
+            <Home size={16} className="opacity-60" aria-hidden="true" />
+            <span>Home</span>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 2</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <BookOpenIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 3</span>
+            <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
+            <span onClick={handleLogout}>Logout</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <UserPen size={16} className="opacity-60" aria-hidden="true" />
-            <span>Update Profile</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <UserPenIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 5</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
-          <span onClick={handleLogout}>Logout</span>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

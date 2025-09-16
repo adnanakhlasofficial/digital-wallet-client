@@ -11,7 +11,7 @@ export default function RootLayout() {
       <main className="grow">
         <Outlet />
       </main>
-      <footer className="border-t pt-8 bg-popover">
+      <footer className="border-t pt-8 bg-popover mt-20">
         <Footer />
       </footer>
     </div>
