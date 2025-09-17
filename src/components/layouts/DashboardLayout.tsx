@@ -8,32 +8,17 @@ import { useUserMeQuery } from "@/redux/features/auth/auth.api";
 import { Navigate, Outlet, useLocation } from "react-router";
 import DashboardProfile from "../ui/DashboardProfile";
 import { ModeToggle } from "../ui/ModeToggle";
+import type { IUser } from "@/types";
 
 export default function DashboardLayout() {
-  const { data, isLoading } = useUserMeQuery(undefined);
+  const { data } = useUserMeQuery(undefined);
   const { pathname } = useLocation();
 
   // if (isLoading) {
   //   return <p>loading...</p>;
   // }
 
-  const user = data?.data || {
-    _id: "68bc815c01a83f24b0f59d79",
-    name: "Roth Hancock",
-    phone: "01812345678",
-    role: "ADMIN",
-    status: "ACTIVE",
-    createdAt: "2025-09-06T18:45:48.552Z",
-    updatedAt: "2025-09-14T21:51:36.169Z",
-    wallet: {
-      _id: "68bc815c01a83f24b0f59d7a",
-      user: "68bc815c01a83f24b0f59d79",
-      balance: 55,
-      status: "ACTIVE",
-      createdAt: "2025-09-06T18:45:48.555Z",
-      updatedAt: "2025-09-07T18:45:04.435Z",
-    },
-  };
+  const user = data?.data as IUser;
 
   if (!user?.phone) {
     return <Navigate to="/login" state={pathname} />;

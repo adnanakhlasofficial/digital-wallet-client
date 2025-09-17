@@ -14,7 +14,7 @@ import {
   useActivateWalletMutation,
   useBlockWalletMutation,
 } from "@/redux/features/wallet/wallet.api";
-import { Eye, Lock, Unlock } from "lucide-react";
+import { Lock, Unlock } from "lucide-react";
 import { toast } from "sonner";
 
 interface IProps {

@@ -1,10 +1,4 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import ContactForm from "@/components/forms/ContactForm";
 import {
   Card,
   CardContent,
@@ -12,49 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import { Mail, MapPin, Phone, Send, Loader2 } from "lucide-react";
-import ContactForm from "@/components/forms/ContactForm";
-
-const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  subject: z.string().min(5, "Subject must be at least 5 characters"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-});
-
-type ContactFormData = z.infer<typeof contactSchema>;
+import { Mail, MapPin, Phone } from "lucide-react";
 
 export default function Contact() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
-  });
-
-  const onSubmit = async (data: ContactFormData) => {
-    setIsSubmitting(true);
-
-    // Simulate API call
-    console.log(data);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    // Show success toast
-    toast.success("Message sent successfully!", {
-      description: "Thank you for reaching out. We'll get back to you soon.",
-    });
-
-    // Reset form
-    reset();
-    setIsSubmitting(false);
-  };
-
   return (
     <div className="min-h-screen p-4 flex items-center justify-center">
       <div className="w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16">

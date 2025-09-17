@@ -1,12 +1,4 @@
-import {
-  BookOpenIcon,
-  ChevronDownIcon,
-  Layers2Icon,
-  LayoutDashboard,
-  LogOutIcon,
-  UserPen,
-  UserPenIcon,
-} from "lucide-react";
+import { ChevronDownIcon, LayoutDashboard, LogOutIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -88,25 +80,6 @@ export default function UserProfile() {
               aria-hidden="true"
             />
             <span>Dashboard</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 2</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <BookOpenIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 3</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <UserPen size={16} className="opacity-60" aria-hidden="true" />
-            <span>Update Profile</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <UserPenIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 5</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

@@ -29,7 +29,7 @@ export function ErrorBoundary() {
         title="Something went wrong"
         description={
           process.env.NODE_ENV === "development"
-            ? error.message
+            ? JSON.stringify(error)
             : "An unexpected error occurred. Please try refreshing the page."
         }
         showBackButton={true}

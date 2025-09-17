@@ -14,6 +14,15 @@ import z from "zod";
 import { Button } from "../ui/button";
 import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { userRole } from "@/constants/user-role";
+import { useNavigate } from "react-router";
 
 export const phoneRegex = /^01[3-9]\d{8}$/;
 
@@ -28,11 +37,13 @@ const formSchema = z.object({
     .regex(phoneRegex, {
       message: "Invalid Bangladeshi phone number. Format: 01XXXXXXXXX",
     }),
+  role: z.string(),
   password: z.string().trim().nonempty({ message: "Password is required" }),
 });
 
 export default function RegisterForm() {
   const [register] = useRegisterMutation();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,6 +51,7 @@ export default function RegisterForm() {
     defaultValues: {
       name: "",
       phone: "",
+      role: userRole.user || "",
       password: "",
     },
   });
@@ -47,11 +59,11 @@ export default function RegisterForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const toastId = toast.loading("Registering...");
     try {
-      const res = await register(values).unwrap();
+      await register(values);
       toast.success("Register success", { id: toastId });
-      console.log(res);
+      navigate("/login");
     } catch (error) {
-      toast.error("Something went wrong.");
+      toast.error("Something went wrong.", { id: toastId });
       console.error(error);
     }
   }
@@ -99,6 +111,34 @@ export default function RegisterForm() {
                     type="text"
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="role"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Role</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a role" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={userRole.agent}>
+                      {userRole.agent}
+                    </SelectItem>
+                    <SelectItem value={userRole.user}>
+                      {userRole.user}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}

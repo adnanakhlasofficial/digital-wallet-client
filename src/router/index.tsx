@@ -11,12 +11,12 @@ import {
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import Error from "@/pages/Error";
+import FAQ from "@/pages/FAQ";
+import Features from "@/pages/Features";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
-import type { ISidebarItem } from "@/types";
 import { generateRoutes } from "@/utils/generate-routes";
-import { routesByRole } from "@/utils/routes-by-role";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
@@ -39,6 +39,14 @@ const router = createBrowserRouter([
           {
             path: "/about",
             Component: About,
+          },
+          {
+            path: "/features",
+            Component: Features,
+          },
+          {
+            path: "/faq",
+            Component: FAQ,
           },
         ],
       },

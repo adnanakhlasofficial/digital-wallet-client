@@ -15,7 +15,7 @@ import {
   useReverseTransactionMutation,
 } from "@/redux/features/transaction/transaction.api";
 import { formatCurrency } from "@/utils/format-currency";
-import { Check, Eye, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { toast } from "sonner";
 
 interface IProps {

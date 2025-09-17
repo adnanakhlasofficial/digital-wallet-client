@@ -46,20 +46,21 @@ export default function LoginForm() {
   });
 
   function setUserCredential() {
-    form.setValue("phone", "01812345678");
-    form.setValue("password", "admin@digital-wallet.com");
+    form.setValue("phone", "01512345678");
+    form.setValue("password", "admin@digital-wallet");
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     const toastId = toast.loading("Logging In...");
     try {
-      const res = await login(values).unwrap();
-      toast.success("Login success", { id: toastId });
-      console.log(res);
-      navigate(state || "/");
+      login(values).unwrap();
+      setTimeout(() => {
+        toast.success("Login success", { id: toastId });
+        navigate((state === "/register" ? "/login" : state) || "/");
+      }, 2000);
     } catch (error) {
-      toast.error("Failed to login");
+      toast.error("Failed to login", { id: toastId });
       console.error(error);
     }
   }
