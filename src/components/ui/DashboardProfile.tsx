@@ -52,6 +52,7 @@ export default function DashboardProfile() {
       await logout(undefined);
       dispatch(authApi.util.resetApiState());
       toast.success("Logout successfully");
+      navigate("/");
     } catch (error) {
       toast.error("Something went wrong.");
       console.log(error);

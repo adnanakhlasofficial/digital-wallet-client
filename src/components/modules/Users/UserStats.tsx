@@ -3,10 +3,14 @@ import { useGetAllUsersQuery } from "@/redux/features/user/user.api";
 import type { IUser } from "@/types";
 import { formatCurrency } from "@/utils/format-currency";
 import { Phone, Users, Wallet } from "lucide-react";
+import UserSkeleton from "./UserSkeleton";
 
 export default function UserStats() {
-  const { data } = useGetAllUsersQuery(undefined);
+  const { data, isLoading } = useGetAllUsersQuery(undefined);
 
+  if (isLoading) {
+    return <UserSkeleton />;
+  }
   const users = data?.data as IUser[];
 
   return (
@@ -19,7 +23,7 @@ export default function UserStats() {
                 Total Users
               </p>
               <p className="text-2xl font-bold text-foreground">
-                {users.length}
+                {users?.length}
               </p>
             </div>
             <div className="p-3 bg-secondary rounded-full">
@@ -37,7 +41,7 @@ export default function UserStats() {
                 Active Users
               </p>
               <p className="text-2xl font-bold text-foreground">
-                {users.filter((u) => u.status === "ACTIVE").length}
+                {users?.filter((u) => u.status === "ACTIVE")?.length}
               </p>
             </div>
             <div className="p-3 bg-secondary rounded-full">
@@ -56,7 +60,7 @@ export default function UserStats() {
               </p>
               <p className="text-2xl font-bold text-foreground">
                 {formatCurrency(
-                  users.reduce((sum, user) => sum + user.wallet.balance, 0)
+                  users?.reduce((sum, user) => sum + user.wallet.balance, 0)
                 )}
               </p>
             </div>

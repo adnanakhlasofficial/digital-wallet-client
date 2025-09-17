@@ -17,6 +17,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { userRole } from "@/constants/user-role";
+import { useUserMeQuery } from "@/redux/features/auth/auth.api";
 import { useGetAllUsersQuery } from "@/redux/features/user/user.api";
 import type { IUser } from "@/types";
 import { formatCurrency } from "@/utils/format-currency";
@@ -24,11 +26,27 @@ import { getUserInitials } from "@/utils/get-user-initials";
 import { getUserStatusVariant } from "@/utils/status-functions";
 import { format } from "date-fns";
 import { Calendar, Eye, Phone, Search, Send, Wallet } from "lucide-react";
+import { useNavigate } from "react-router";
 
 export default function UserTable() {
-  const { data } = useGetAllUsersQuery(undefined);
+  const navigate = useNavigate();
+  const { data: allUsers } = useGetAllUsersQuery(undefined);
+  const { data: userMeData } = useUserMeQuery(undefined);
 
-  const users = data?.data as IUser[];
+  const users = allUsers?.data as IUser[];
+  const userMe = userMeData?.data as IUser;
+
+  console.log(users);
+
+  function handleSend(role: string, walletId: string) {
+    if (userMe.role === userRole.agent && role === userRole.user) {
+      return navigate(`/dashboard/cash-in/${walletId}`);
+    } else if (userMe.role === userRole.user && role === userRole.agent) {
+      return navigate(`/dashboard/cash-out/${walletId}`);
+    } else if (userMe.role === userRole.user && role === userRole.user) {
+      return navigate(`/dashboard/send-money/${walletId}`);
+    }
+  }
 
   return (
     <Card>
@@ -59,7 +77,7 @@ export default function UserTable() {
                 <TableHead className="font-semibold">User</TableHead>
                 <TableHead className="font-semibold">Contact</TableHead>
                 <TableHead className="font-semibold">Status</TableHead>
-                <TableHead className="font-semibold">Wallet Balance</TableHead>
+                <TableHead className="font-semibold">Wallet</TableHead>
                 <TableHead className="font-semibold">Last Updated</TableHead>
                 <TableHead className="font-semibold text-right">
                   Actions
@@ -101,11 +119,16 @@ export default function UserTable() {
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Wallet className="h-4 w-4 text-muted-foreground" />
-                      <span className="font-semibold text-foreground">
-                        {formatCurrency(user.wallet.balance)}
-                      </span>
+                    <div className="flex flex-col gap-2">
+                      {userMe.role === userRole.admin && (
+                        <span className="flex gap-2 items-center">
+                          <Wallet className="h-4 w-4 text-muted-foreground" />
+                          <span className="font-semibold text-foreground">
+                            {formatCurrency(user.wallet.balance)}
+                          </span>
+                        </span>
+                      )}
+                      <span>{user.wallet._id}</span>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -117,12 +140,19 @@ export default function UserTable() {
                     </div>
                   </TableCell>
                   <TableCell className="text-right space-x-2">
-                    <Button variant={"outline"}>
-                      <Send />
-                    </Button>
-                    <Button variant={"outline"}>
-                      <Eye />
-                    </Button>
+                    {userMe.role !== userRole.admin && (
+                      <Button
+                        onClick={() => handleSend(user.role, user.wallet._id)}
+                        variant={"outline"}
+                      >
+                        <Send />
+                      </Button>
+                    )}
+                    {userMe.role === userRole.admin && (
+                      <Button variant={"outline"}>
+                        <Eye />
+                      </Button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

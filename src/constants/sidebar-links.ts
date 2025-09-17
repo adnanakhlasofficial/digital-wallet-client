@@ -1,10 +1,11 @@
 import AllTransactions from "@/pages/AllTransactions";
 import AllUsers from "@/pages/AllUsers";
 import AllWallets from "@/pages/AllWallets";
+import CashIn from "@/pages/CashIn";
+import CashOut from "@/pages/CashOut";
 import EditProfile from "@/pages/EditProfile";
 import MyProfile from "@/pages/MyProfile";
-import TransferFund from "@/pages/TransferFund";
-import WithdrawMoney from "@/pages/WithdrawMoney";
+import sendMoney from "@/pages/sendMoney";
 import type { ISidebarItem } from "@/types";
 import { CreditCard, Send, UserCog } from "lucide-react";
 import { RiUser3Line } from "react-icons/ri";
@@ -12,6 +13,7 @@ import { RiUser3Line } from "react-icons/ri";
 export const commonSidebar: ISidebarItem[] = [
   {
     title: "Profile & Personal Info",
+    show: true,
     items: [
       {
         index: true,
@@ -30,6 +32,7 @@ export const commonSidebar: ISidebarItem[] = [
   },
   {
     title: "Users",
+    show: true,
     items: [
       {
         title: "All Users",
@@ -45,18 +48,34 @@ export const userSidebar: ISidebarItem[] = [
   ...commonSidebar,
   {
     title: "Wallet & Transactions",
+    show: false,
     items: [
       {
-        title: "Transfer fund",
+        title: "Send Money",
         icon: Send,
-        url: "/dashboard/transfer-fund",
-        component: TransferFund,
+        url: "/dashboard/send-money/:walletId",
+        component: sendMoney,
       },
       {
-        title: "Withdraw Money",
+        title: "Cash Out",
         icon: CreditCard,
-        url: "/dashboard/withdraw-money",
-        component: WithdrawMoney,
+        url: "/dashboard/cash-out/:walletId",
+        component: CashOut,
+      },
+    ],
+  },
+];
+export const agentSidebar: ISidebarItem[] = [
+  ...commonSidebar,
+  {
+    title: "Wallet & Transactions",
+    show: false,
+    items: [
+      {
+        title: "Cash In",
+        icon: Send,
+        url: "/dashboard/cash-in/:walletId",
+        component: CashIn,
       },
     ],
   },
@@ -66,6 +85,7 @@ export const adminSidebar: ISidebarItem[] = [
   ...commonSidebar,
   {
     title: "Wallet & Transactions",
+    show: true,
     items: [
       {
         title: "All Transactions",

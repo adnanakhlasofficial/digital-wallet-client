@@ -4,6 +4,7 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import RootLayout from "@/components/layouts/RootLayout";
 import {
   adminSidebar,
+  agentSidebar,
   commonSidebar,
   userSidebar,
 } from "@/constants/sidebar-links";
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
             ...commonSidebar,
             ...adminSidebar,
             ...userSidebar,
+            ...agentSidebar,
           ]),
         ],
       },

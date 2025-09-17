@@ -32,6 +32,7 @@ export interface IPendingRequest {
 
 export interface ISidebarItem {
   title: string;
+  show?: boolean;
   items: {
     index?: boolean;
     title: string;
@@ -97,6 +98,7 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
   wallet: {
+    _id: string;
     balance: number;
     status: string;
     createdAt: string;

@@ -17,6 +17,7 @@ import { ChevronsRight } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router";
 import Logo from "./logo";
 import { useUserMeQuery } from "@/redux/features/auth/auth.api";
+import { cn } from "@/lib/utils";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { pathname } = useLocation();
@@ -47,7 +48,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
         {sidebar.map((item) => (
-          <SidebarGroup key={item.title}>
+          <SidebarGroup className={cn({ hidden: !item.show })} key={item.title}>
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
