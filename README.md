@@ -119,7 +119,7 @@ Watch a walkthrough of core features:
 - Transaction filtering
 - Admin/Agent/User management
 
-📺 [Demo Video Link](https://your-demo-video-url.com)
+📺 [Demo Video Link](https://drive.google.com/file/d/1MJXpFimA5778vW8waM26q21l7d4HYCuc/view?usp=sharing)
 
 ---
 

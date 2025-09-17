@@ -7,14 +7,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  useCashInMutation,
-  useCashOutMutation,
-  useSendMoneyMutation,
-} from "@/redux/features/transaction/transaction.api";
+import { useCashInMutation } from "@/redux/features/transaction/transaction.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useLocation, useParams } from "react-router";
+import { useParams } from "react-router";
 import { toast } from "sonner";
 import z from "zod";
 import { Button } from "../ui/button";
@@ -26,14 +22,9 @@ const formSchema = z.object({
   walletId: z.string().trim().nonempty({ message: "Wallet ID  is required" }),
 });
 
-export default function TransactionForm() {
+export default function CashInForm() {
   const { walletId } = useParams();
-  const { pathname } = useLocation();
-  const [sendMoney] = useSendMoneyMutation(undefined);
-  const [cashOut] = useCashOutMutation(undefined);
   const [cashIn] = useCashInMutation(undefined);
-
-  const path = pathname.split("/")[2];
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,24 +36,16 @@ export default function TransactionForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    console.log(values);
-    let res;
-    const toastId = toast.loading("Logging In...");
+    const toastId = toast.loading("Sending...");
     const transInfo = {
       amount: values.amount,
       to_wallet: walletId,
     };
     try {
-      if (path === "send-money") {
-        res = await sendMoney(transInfo).unwrap();
-      } else if (path === "cash-out") {
-        res = await cashOut(transInfo).unwrap();
-      } else if (path === "cash-in") {
-        res = await cashIn(transInfo).unwrap();
-      }
+      const res = await cashIn(transInfo).unwrap();
+
       console.log(res);
-      toast.success("Send money requested", { id: toastId });
+      toast.success("Cash In requested", { id: toastId });
     } catch (error) {
       toast.error("Something went wrong", { id: toastId });
       console.error(error);

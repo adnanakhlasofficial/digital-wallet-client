@@ -9,14 +9,15 @@ import { Navigate, Outlet, useLocation } from "react-router";
 import DashboardProfile from "../ui/DashboardProfile";
 import { ModeToggle } from "../ui/ModeToggle";
 import type { IUser } from "@/types";
+import DashboardSkeleton from "./DashboardSkeleton";
 
 export default function DashboardLayout() {
-  const { data } = useUserMeQuery(undefined);
+  const { data, isLoading } = useUserMeQuery(undefined);
   const { pathname } = useLocation();
 
-  // if (isLoading) {
-  //   return <p>loading...</p>;
-  // }
+  if (isLoading) {
+    return <DashboardSkeleton />;
+  }
 
   const user = data?.data as IUser;
 

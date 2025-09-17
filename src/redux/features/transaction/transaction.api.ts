@@ -11,16 +11,18 @@ export const transactionApi = baseApi.injectEndpoints({
       invalidatesTags: ["USER"],
     }),
     cashOut: builder.mutation({
-      query: () => ({
+      query: (data) => ({
         url: "/transaction/cash-out",
         method: "POST",
+        data,
       }),
       invalidatesTags: ["USER"],
     }),
     cashIn: builder.mutation({
-      query: () => ({
+      query: (data) => ({
         url: "/transaction/cash-in",
         method: "POST",
+        data,
       }),
       invalidatesTags: ["USER"],
     }),

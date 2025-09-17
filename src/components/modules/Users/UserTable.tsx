@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { userRole } from "@/constants/user-role";
+import { cn } from "@/lib/utils";
 import { useUserMeQuery } from "@/redux/features/auth/auth.api";
 import { useGetAllUsersQuery } from "@/redux/features/user/user.api";
 import type { IUser } from "@/types";
@@ -88,7 +89,9 @@ export default function UserTable() {
               {users.map((user) => (
                 <TableRow
                   key={user._id}
-                  className="hover:bg-muted/50 transition-colors"
+                  className={cn("hover:bg-muted/50 transition-colors", {
+                    hidden: user._id === userMe._id,
+                  })}
                 >
                   <TableCell>
                     <div className="flex items-center gap-3">
