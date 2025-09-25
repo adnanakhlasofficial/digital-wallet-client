@@ -1,5 +1,4 @@
 import CashOutForm from "@/components/forms/CashOutForm";
-import SendMoneyForm from "@/components/forms/SendMoneyForm";
 
 export default function CashOut() {
   return (
